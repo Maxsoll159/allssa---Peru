@@ -8,12 +8,13 @@ const app = next({ dev: process.env.NODE_ENV !== "production" });
 
 const handle = app.getRequestHandler();
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3010;
 
 global.app = app;
 
 function main() {
   const server = express();
+  /**COMENTARIO*/ 
 
   server.use("/files", express.static(path.join(__dirname, "../files")));
 
