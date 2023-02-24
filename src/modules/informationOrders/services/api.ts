@@ -32,3 +32,10 @@ export const saveInformationOrder = (requestData: any) =>
       },
     })
     .then((data) => data.data);
+
+
+    
+    export const deleteInfo = (id: number) =>
+    axios
+      .get<InformationOrderResponse>("/api/information-orders/delete/" + id)
+      .then((data) => data.data);

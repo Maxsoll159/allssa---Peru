@@ -12,6 +12,10 @@ import {
 } from "@chakra-ui/react";
 import { InformationOrderData } from "../domain";
 import { PDF } from "@prisma/client";
+import { deleteInfo } from "../services";
+import { toast } from 'react-toastify';
+import { useAtomValue } from "jotai";
+import { informationOrderDataAtom } from "../atoms";
 
 const UserHeader = () => (
   <>
@@ -21,9 +25,14 @@ const UserHeader = () => (
     <Th color="gray.500">T. Documento</Th>
     <Th color="gray.500">Nro. Documento</Th>
     <Th color="gray.500">Nombre</Th>
+    <Th color="gray.500">Fecha Recepcion</Th>
+    <Th color="gray.500">Fecha de Entrega</Th>
     <Th color="gray.500">Estado</Th>
     <Th pr="0" color="gray.500">
       PDF
+    </Th>
+    <Th pr="0" color="gray.500">
+      Acciones
     </Th>
   </>
 );
@@ -32,8 +41,24 @@ const UserBody = (props: {
   informationOrders: InformationOrderData[];
   onOpenPdf?: (pdf: PDF | undefined) => void;
 }) => {
-  const { informationOrders } = props;
+  const {
+    data: informationOrdersPages,
+    isLoading,
+    isFetching,
+    refetch,
+  } = useAtomValue(informationOrderDataAtom);
 
+  const { informationOrders } = props;
+  const eliminar = async (id:number) =>{
+    try {
+      const datos = await deleteInfo(id);
+      refetch()
+      toast.success("¡Informacion Eliminada!");
+    } catch (error) {
+      toast.error("Hubo un error al crear la petición");
+      throw error;
+    }
+  }
   return (
     <>
       {informationOrders.map((info, index) => {
@@ -49,6 +74,8 @@ const UserBody = (props: {
             <Td fontWeight="bold">{info.documentType ?? "--"}</Td>
             <Td>{info.documentNumber ?? "--"}</Td>
             <Td>{info.name ?? "--"}</Td>
+            <Td>{info.createdAt.toString() ?? "--"}</Td>
+            <Td>{info.PDF?.createdAt.toString() ?? "--"}</Td>
             <Td
               fontWeight="bold"
               color={info.isComplete ? "green" : "yellow.600"}
@@ -64,6 +91,7 @@ const UserBody = (props: {
             >
               Ver PDF
             </Td>
+            <Td><Button onClick={()=>eliminar(info.id)} colorScheme='red'>Eliminar</Button></Td>
           </Tr>
         );
       })}
