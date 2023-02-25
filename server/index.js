@@ -8,7 +8,7 @@ const app = next({ dev: process.env.NODE_ENV !== "production" });
 
 const handle = app.getRequestHandler();
 
-const port = process.env.PORT || 3010;
+const port = process.env.PORT || 3000;
 
 global.app = app;
 
