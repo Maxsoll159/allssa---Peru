@@ -31,6 +31,7 @@
     "jotai-tanstack-query": "^0.4.0",
     "multer": "^1.4.5-lts.1",
     "next": "13.0.4",
+    "next-build-id": "^3.0.0",
     "next-connect": "^1.0.0-next.3",
     "react": "18.2.0",
     "react-dom": "18.2.0",

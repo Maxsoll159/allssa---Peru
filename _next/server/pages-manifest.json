@@ -1,0 +1,20 @@
+{
+  "/_app": "pages/_app.js",
+  "/_error": "pages/_error.js",
+  "/api/admins": "pages/api/admins.js",
+  "/api/auth/signin": "pages/api/auth/signin.js",
+  "/api/auth/signout": "pages/api/auth/signout.js",
+  "/api/information-orders/[id]": "pages/api/information-orders/[id].js",
+  "/api/information-orders/delete/[id]": "pages/api/information-orders/delete/[id].js",
+  "/api/user": "pages/api/user.js",
+  "/api/users": "pages/api/users.js",
+  "/auth/signin": "pages/auth/signin.html",
+  "/api/information-orders": "pages/api/information-orders.js",
+  "/api/information-orders/save": "pages/api/information-orders/save.js",
+  "/api/information-orders/process": "pages/api/information-orders/process.js",
+  "/": "pages/index.js",
+  "/users": "pages/users.js",
+  "/admins": "pages/admins.js",
+  "/_document": "pages/_document.js",
+  "/404": "pages/404.html"
+}
