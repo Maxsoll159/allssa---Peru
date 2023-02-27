@@ -104,7 +104,7 @@ const sendEmail = async (order: any) => {
 
   return await transporter.sendMail({
     from: "Sistema de Notificación <notificaciones@dataverifica.com>",
-    to: "requerimiento@dataverifica.com; gerencia@dataverifica.com",
+    to: "requerimiento@dataverifica.com; gerencia@dataverifica.com, proceso@dataverifica.com",
     subject: "Nueva solicitud pendiente",
     text: "Esto es una notificación",
     html: `<div>
@@ -112,7 +112,7 @@ const sendEmail = async (order: any) => {
       <p>El cual solicita ${order.requestInformation}</p>
       <p>La hora que se registro la solicitud es ${order.createdAt}</p>
     </div>
-    <p>Realizado por <a href="https://devsolutionsa.com">DevSoltion</a></p>
+    <p>Realizado por <a href="https://devsolutionsa.com">DevSolutions</a></p>
     `
   });
 }
