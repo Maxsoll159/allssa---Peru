@@ -49,7 +49,7 @@ const UserBody = (props: {
   } = useAtomValue(informationOrderDataAtom);
 
   const { informationOrders } = props;
-  const eliminar = async (id:number) =>{
+  const eliminar = async (id: number) => {
     try {
       const datos = await deleteInfo(id);
       refetch()
@@ -57,6 +57,22 @@ const UserBody = (props: {
     } catch (error) {
       toast.error("Hubo un error al crear la petición");
       throw error;
+    }
+  }
+  const FormtearFecha = (fecha: any) => {
+    const fechaActual = new Date(fecha)
+    const dateFinal = fechaActual.toLocaleDateString("en-US");
+    if(dateFinal !== "Invalid Date"){
+      const Mostrar = dateFinal +
+      " " +
+      fechaActual.getHours() +
+      ":" +
+      fechaActual.getMinutes() +
+      ":" +
+      fechaActual.getSeconds()
+      return Mostrar
+    }else{
+      return "--"
     }
   }
   return (
@@ -74,8 +90,8 @@ const UserBody = (props: {
             <Td fontWeight="bold">{info.documentType ?? "--"}</Td>
             <Td>{info.documentNumber ?? "--"}</Td>
             <Td>{info.name ?? "--"}</Td>
-            <Td>{info.createdAt.toString() ?? "--"}</Td>
-            <Td>{info.PDF?.createdAt.toString() ?? "--"}</Td>
+            <Td>{FormtearFecha(info.createdAt)}</Td>
+            <Td>{FormtearFecha(info.PDF?.createdAt)}</Td>
             <Td
               fontWeight="bold"
               color={info.isComplete ? "green" : "yellow.600"}
@@ -91,7 +107,7 @@ const UserBody = (props: {
             >
               Ver PDF
             </Td>
-            <Td><Button onClick={()=>eliminar(info.id)} colorScheme='red'>Eliminar</Button></Td>
+            <Td><Button onClick={() => eliminar(info.id)} colorScheme='red'>Eliminar</Button></Td>
           </Tr>
         );
       })}

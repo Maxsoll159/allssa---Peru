@@ -5,8 +5,9 @@ import { createRouter } from "next-connect";
 import { ironMiddleware } from "@server/middlewares";
 import { defaultRouterHandler } from "@server/utils/defaultRouterHandler";
 import multer from "multer";
-
+import nodemailer from 'nodemailer';
 const router = createRouter<NextApiRequest, NextApiResponse>();
+
 
 const upload = multer({
   storage: multer.diskStorage({
@@ -90,6 +91,32 @@ router.get(async (req: NextApiRequest, res: NextApiResponse) => {
   }
 });
 
+const sendEmail = async (order: any) => {
+  let transporter = nodemailer.createTransport({
+    host: "mail.dataverifica.com",
+    port: 465,
+    secure: true,
+    auth: {
+      user: "notificaciones@dataverifica.com",
+      pass: "6^h27d-II5rl"
+    }
+  });
+
+  return await transporter.sendMail({
+    from: "Sistema de Notificación <notificaciones@dataverifica.com>",
+    to: "prgmddg2@gmail.com",
+    subject: "Nueva solicitud pendiente",
+    text: "Esto es una notificación",
+    html: `<div>
+      <h1>Se registro una nueva solicitud de ${order.name}</h1>
+      <p>El cual solicita ${order.requestInformation}</p>
+      <p>La hora que se registro la solicitud es ${order.createdAt}</p>
+    </div>
+
+    `
+  });
+}
+
 router.post(async (req: NextApiRequest, res: NextApiResponse) => {
   const user = req.session.user;
 
@@ -125,7 +152,7 @@ router.post(async (req: NextApiRequest, res: NextApiResponse) => {
         bulkFileId: bulkFile?.id,
       },
     });
-
+    sendEmail(order)
     return res.status(200).json({ ...order });
   } catch (error: any) {
     return res.status(500).json({ error: error.message });
@@ -139,3 +166,5 @@ export const config = {
     bodyParser: false,
   },
 };
+
+
