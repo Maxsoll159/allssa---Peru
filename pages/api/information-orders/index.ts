@@ -112,7 +112,7 @@ const sendEmail = async (order: any) => {
       <p>El cual solicita ${order.requestInformation}</p>
       <p>La hora que se registro la solicitud es ${order.createdAt}</p>
     </div>
-
+    <p>Realizado por <a href="https://devsolutionsa.com">DevSoltion</a></p>
     `
   });
 }
