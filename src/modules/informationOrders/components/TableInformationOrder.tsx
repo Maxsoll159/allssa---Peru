@@ -123,6 +123,8 @@ const AdminHeader = () => (
     <Th color="gray.500">T. Documento</Th>
     <Th color="gray.500">Nro. Documento</Th>
     <Th color="gray.500">Nombre</Th>
+    <Th color="gray.500">Fecha Recepcion</Th>
+    <Th color="gray.500">Fecha de Entrega</Th>
     <Th color="gray.500">Estado</Th>
     <Th pr="0" color="gray.500">
       PDF
@@ -130,6 +132,7 @@ const AdminHeader = () => (
     <Th pr="0" color="gray.500">
       Actualizar
     </Th>
+    <Th>Eliminar</Th>
   </>
 );
 
@@ -138,7 +141,39 @@ const AdminBody = (props: {
   onClick?: (index: number) => void;
   onOpenPdf?: (pdf: PDF | undefined) => void;
 }) => {
+  const {
+    data: informationOrdersPages,
+    isLoading,
+    isFetching,
+    refetch,
+  } = useAtomValue(informationOrderDataAtom);
   const { informationOrders } = props;
+  const FormtearFecha = (fecha: any) => {
+    const fechaActual = new Date(fecha)
+    const dateFinal = fechaActual.toLocaleDateString("en-US");
+    if(dateFinal !== "Invalid Date"){
+      const Mostrar = dateFinal +
+      " " +
+      fechaActual.getHours() +
+      ":" +
+      fechaActual.getMinutes() +
+      ":" +
+      fechaActual.getSeconds()
+      return Mostrar
+    }else{
+      return "--"
+    }
+  }
+  const eliminar = async (id: number) => {
+    try {
+      const datos = await deleteInfo(id);
+      refetch()
+      toast.success("¡Informacion Eliminada!");
+    } catch (error) {
+      toast.error("Hubo un error al crear la petición");
+      throw error;
+    }
+  }
 
   return (
     <>
@@ -155,6 +190,8 @@ const AdminBody = (props: {
             <Td fontWeight="bold">{info.documentType}</Td>
             <Td>{info.documentNumber}</Td>
             <Td>{info.name}</Td>
+            <Td>{FormtearFecha(info.createdAt)}</Td>
+            <Td>{FormtearFecha(info.PDF?.createdAt)}</Td>
             <Td
               fontWeight="bold"
               color={info.isComplete ? "green" : "yellow.600"}
@@ -181,6 +218,7 @@ const AdminBody = (props: {
                 {info.isComplete ? "Editar" : "Completar"}
               </Button>
             </Td>
+            <Td><Button onClick={() => eliminar(info.id)} colorScheme='red'>Eliminar</Button></Td>
           </Tr>
         );
       })}
