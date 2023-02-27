@@ -152,7 +152,6 @@ router.post(async (req: NextApiRequest, res: NextApiResponse) => {
         bulkFileId: bulkFile?.id,
       },
     });
-    sendEmail(order)
     return res.status(200).json({ ...order });
   } catch (error: any) {
     return res.status(500).json({ error: error.message });
