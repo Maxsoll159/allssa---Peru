@@ -150,7 +150,8 @@ const AdminBody = (props: {
   const { informationOrders } = props;
   const FormtearFecha = (fecha: any) => {
     const fechaActual = new Date(fecha)
-    const dateFinal = fechaActual.toLocaleDateString("en-US");
+    const dateFinal = fechaActual.toLocaleDateString();
+    console.log(dateFinal)
     if(dateFinal !== "Invalid Date"){
       const Mostrar = dateFinal +
       " " +
