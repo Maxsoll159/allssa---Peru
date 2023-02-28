@@ -31,9 +31,6 @@ const UserHeader = () => (
     <Th pr="0" color="gray.500">
       PDF
     </Th>
-    <Th pr="0" color="gray.500">
-      Acciones
-    </Th>
   </>
 );
 
@@ -61,7 +58,7 @@ const UserBody = (props: {
   }
   const FormtearFecha = (fecha: any) => {
     const fechaActual = new Date(fecha)
-    const dateFinal = fechaActual.toLocaleDateString("en-US");
+    const dateFinal = fechaActual.toLocaleDateString();
     if(dateFinal !== "Invalid Date"){
       const Mostrar = dateFinal +
       " " +
@@ -107,7 +104,6 @@ const UserBody = (props: {
             >
               Ver PDF
             </Td>
-            <Td><Button onClick={() => eliminar(info.id)} colorScheme='red'>Eliminar</Button></Td>
           </Tr>
         );
       })}
